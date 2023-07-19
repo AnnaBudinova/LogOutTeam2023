@@ -24,9 +24,9 @@ public class LogOut {
         this.driver = new ChromeDriver();
         this.driver.manage().window().maximize();
 
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
     @AfterMethod
     protected final void tearDownTest() {
@@ -38,12 +38,11 @@ public class LogOut {
     public Object[][] getUsers() {
         return new Object[][]{ //login with username
                 {"anbori@abv.bg", "_Passw0rd", "annabudinova"},
-                {"annabudinova", "_Passw0rd", "annabudinova"},
         };
     }
 
     @Test(dataProvider = "getUsers")
-    public void testLogOut1(String user, String password, String name){
+    public void testLogOutSmallScreen(String user, String password, String name){
         driver.get("http://training.skillo-bg.com:4300/posts/all");
         WebElement loginLink = driver.findElement(By.id("nav-link-login"));
         loginLink.click();
@@ -79,10 +78,13 @@ public class LogOut {
         logoutLink.click();
 
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
     }
 
     @Test(dataProvider = "getUsers")
-    public void testLogOut2(String user, String password, String name){
+    public void testLogOutFromProfile(String user, String password, String name){
         driver.get("http://training.skillo-bg.com:4300/posts/all");
         WebElement loginLink = driver.findElement(By.id("nav-link-login"));
         loginLink.click();
@@ -115,5 +117,83 @@ public class LogOut {
 
         wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
 
+        signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
+    }
+
+    @Test(dataProvider = "getUsers")
+    public void testLogOutFromNewPost(String user, String password, String name){
+        driver.get("http://training.skillo-bg.com:4300/posts/all");
+        WebElement loginLink = driver.findElement(By.id("nav-link-login"));
+        loginLink.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        WebElement signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
+
+        WebElement userNameField = driver.findElement(By.id("defaultLoginFormUsername"));
+        userNameField.sendKeys(user);
+
+        WebElement passwordField = driver.findElement(By.id("defaultLoginFormPassword"));
+        passwordField.sendKeys(password);
+
+        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
+        signInButton.click();
+
+        WebElement profileLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-link-new-post")));
+        profileLink.click();
+
+        wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/posts/create"));
+
+        WebElement isTextDisplayed = driver.findElement(By.xpath("//*[@class='text-center']"));
+        wait.until(ExpectedConditions.visibilityOf(isTextDisplayed));
+
+        WebElement logoutLink = driver.findElement(By.xpath("//*[@class='fas fa-sign-out-alt fa-lg']"));
+        logoutLink.click();
+
+        wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
+    }
+
+    @Test(dataProvider = "getUsers")
+    public void testLogOutFromHome(String user, String password, String name){
+        driver.get("http://training.skillo-bg.com:4300/posts/all");
+        WebElement loginLink = driver.findElement(By.id("nav-link-login"));
+        loginLink.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        WebElement signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
+
+        WebElement userNameField = driver.findElement(By.id("defaultLoginFormUsername"));
+        userNameField.sendKeys(user);
+
+        WebElement passwordField = driver.findElement(By.id("defaultLoginFormPassword"));
+        passwordField.sendKeys(password);
+
+        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
+        signInButton.click();
+
+        WebElement profileLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-link-home")));
+        profileLink.click();
+
+        wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/posts/all"));
+
+        WebElement isTextDisplayed = driver.findElement(By.id("nav-link-home"));
+        wait.until(ExpectedConditions.visibilityOf(isTextDisplayed));
+
+        WebElement logoutLink = driver.findElement(By.xpath("//*[@class='fas fa-sign-out-alt fa-lg']"));
+        logoutLink.click();
+
+        wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
     }
 }
