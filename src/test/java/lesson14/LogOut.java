@@ -1,9 +1,12 @@
+package lesson14;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -21,7 +24,7 @@ public class LogOut {
     }
     @BeforeMethod
     protected final void setUpTest() {
-        this.driver = new ChromeDriver();
+        this.driver = new EdgeDriver();
         this.driver.manage().window().maximize();
 
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
@@ -142,8 +145,8 @@ public class LogOut {
         WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
         signInButton.click();
 
-        WebElement profileLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-link-new-post")));
-        profileLink.click();
+        WebElement newPostLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-link-new-post")));
+        newPostLink.click();
 
         wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/posts/create"));
 
@@ -179,9 +182,6 @@ public class LogOut {
 
         WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
         signInButton.click();
-
-        WebElement profileLink = wait.until(ExpectedConditions.elementToBeClickable(By.id("nav-link-home")));
-        profileLink.click();
 
         wait.until(ExpectedConditions.urlContains("http://training.skillo-bg.com:4300/posts/all"));
 
