@@ -1,7 +1,7 @@
 package lesson16;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import factory.*;
+import lesson16_object.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -42,6 +42,14 @@ public class LogOutTest {
                 {"anbori@abv.bg", "_Passw0rd", "annabudinova"}, //login with username
         };
     }
+
+    @DataProvider(name = "loginUser")
+    public Object[][] loginUsers() {
+        return new Object[][]{
+                {"anbori@abv.bg", "_Passw0rd"},
+        };
+    }
+
     @Test(dataProvider = "getUsers")
     public void testLogOutFromProfile(String user, String password, String name) {
         HomePage homePage = new HomePage(driver);
@@ -70,8 +78,8 @@ public class LogOutTest {
         Assert.assertEquals(signInText, "Sign in");
     }
 
-    @Test(dataProvider = "getUsers")
-    public void testLogOutFromNewPost(String user, String password, String name) {
+    @Test(dataProvider = "loginUser")
+    public void testLogOutFromNewPost(String user, String password) {
         HomePage homePage = new HomePage(driver);
         homePage.navigateTo();
 
@@ -98,8 +106,8 @@ public class LogOutTest {
         Assert.assertEquals(signInText, "Sign in");
     }
 
-    @Test(dataProvider = "getUsers")
-    public void testLogOutFromHome(String user, String password, String name) {
+    @Test(dataProvider = "loginUser")
+    public void testLogOutFromHome(String user, String password) {
         HomePage homePage = new HomePage(driver);
         homePage.navigateTo();
 
