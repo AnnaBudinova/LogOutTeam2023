@@ -16,10 +16,10 @@ public class Header {
     private WebElement profileLink;
     @FindBy(id = "nav-link-login")
     private WebElement loginLink;
-   /* @FindBy(id= "nav-link-logout")
+    @FindBy(id= "nav-link-logout")
     private WebElement clickSmallLogOutIcon;
     @FindBy(id="nav-link-new-post")
-    private WebElement newPostLink;*/
+    private WebElement newPostLink;
 
     public Header(WebDriver driver) {
         this.driver = driver;
@@ -33,7 +33,12 @@ public class Header {
     public void clickLogin() {
         loginLink.click();
     }
-
+    public void newPostLink() {
+        newPostLink.click();
+    }
+    public void clickSmallLogOutIcon() {
+        clickSmallLogOutIcon.click();
+    }
     public void clickSmallLogOut() {
         WebElement clickSmallLogOut = driver.findElement(By.xpath("//*[@class='navbar-toggler']"));
         clickSmallLogOut.click();
@@ -41,13 +46,5 @@ public class Header {
     public void clickLogOut() {
         WebElement logoutLink = driver.findElement(By.xpath("//*[@class='fas fa-sign-out-alt fa-lg']"));
         logoutLink.click();
-    }
-    public void clickSmallLogOutIcon() {
-        WebElement clickSmallLogOutIcon = driver.findElement(By.id("nav-link-logout"));
-        clickSmallLogOutIcon.click();
-    }
-    public void newPostLink() {
-        WebElement newPostLink = driver.findElement(By.id("nav-link-new-post"));
-        newPostLink.click();
     }
 }

@@ -25,9 +25,7 @@ public class LogOutTests {
     protected final void setUpTest() {
         this.driver = new EdgeDriver();
         this.driver.manage().window().maximize();
-
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(25));
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
     @AfterMethod
@@ -42,15 +40,35 @@ public class LogOutTests {
                 {"anbori@abv.bg", "_Passw0rd", "annabudinova"},
         };
     }
-
     @DataProvider(name = "loginUser")
     public Object[][] loginUsers() {
         return new Object[][]{
                 {"anbori@abv.bg", "_Passw0rd"},
         };
     }
+    public void loginUserMethod(String user, String password){
 
-    @Test(dataProvider = "getUsers")
+        driver.get("http://training.skillo-bg.com:4300/posts/all");
+        WebElement loginLink = driver.findElement(By.id("nav-link-login"));
+        loginLink.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe("http://training.skillo-bg.com:4300/users/login"));
+
+        WebElement signInElement = driver.findElement(By.xpath("//*[text()='Sign in']"));
+        wait.until(ExpectedConditions.visibilityOf(signInElement));
+
+        WebElement userNameField = driver.findElement(By.id("defaultLoginFormUsername"));
+        userNameField.sendKeys(user);
+
+        WebElement passwordField = driver.findElement(By.id("defaultLoginFormPassword"));
+        passwordField.sendKeys(password);
+
+        WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("sign-in-button")));
+        signInButton.click();
+    }
+
+    @Test
     public void testLogOutSmallScreen(String user, String password, String name){
         driver.get("http://training.skillo-bg.com:4300/posts/all");
         WebElement loginLink = driver.findElement(By.id("nav-link-login"));

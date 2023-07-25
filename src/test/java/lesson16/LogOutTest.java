@@ -1,7 +1,7 @@
 package lesson16;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import lesson16_object.*;
+import factory.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
