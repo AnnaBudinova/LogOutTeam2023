@@ -37,7 +37,12 @@ public class Header {
     public void clickLogin() {
         loginLink.click();
     }
-
+    public void newPostLink() {
+        newPostLink.click();
+    }
+    public void clickSmallLogOutIcon() {
+        clickSmallLogOutIcon.click();
+    }
     public void clickSmallLogOut() {
         clickSmallLogOut.click();
     }
