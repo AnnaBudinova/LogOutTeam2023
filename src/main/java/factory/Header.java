@@ -49,10 +49,4 @@ public class Header {
     public void clickLogOut() {
         clickLogOut.click();
     }
-    public void clickSmallLogOutIcon() {
-        clickSmallLogOutIcon.click();
-    }
-    public void newPostLink() {
-        newPostLink.click();
-    }
 }
