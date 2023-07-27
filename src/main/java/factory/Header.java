@@ -20,6 +20,10 @@ public class Header {
     private WebElement clickSmallLogOutIcon;
     @FindBy(id="nav-link-new-post")
     private WebElement newPostLink;
+    @FindBy(xpath = "//*[@class='navbar-toggler']")
+    private WebElement clickSmallLogOut;
+    @FindBy(xpath = "//*[@class='fas fa-sign-out-alt fa-lg']")
+    private WebElement clickLogOut;
 
     public Header(WebDriver driver) {
         this.driver = driver;
@@ -40,11 +44,15 @@ public class Header {
         clickSmallLogOutIcon.click();
     }
     public void clickSmallLogOut() {
-        WebElement clickSmallLogOut = driver.findElement(By.xpath("//*[@class='navbar-toggler']"));
         clickSmallLogOut.click();
     }
     public void clickLogOut() {
-        WebElement logoutLink = driver.findElement(By.xpath("//*[@class='fas fa-sign-out-alt fa-lg']"));
-        logoutLink.click();
+        clickLogOut.click();
+    }
+    public void clickSmallLogOutIcon() {
+        clickSmallLogOutIcon.click();
+    }
+    public void newPostLink() {
+        newPostLink.click();
     }
 }

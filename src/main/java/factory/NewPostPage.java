@@ -14,6 +14,9 @@ public class NewPostPage {
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
     private final WebDriver driver;
 
+    @FindBy(xpath = "//*[@class='text-center']")
+    private WebElement isTextDisplayed;
+
     public NewPostPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -24,7 +27,6 @@ public class NewPostPage {
         return wait.until(ExpectedConditions.urlContains(NewPostPage.PAGE_URL));
     }
     public String isTextDisplayed() {
-        WebElement isTextDisplayed = driver.findElement(By.xpath("//*[@class='text-center']"));
         return isTextDisplayed.getText();
     }
 }
